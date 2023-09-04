@@ -1,7 +1,7 @@
 version: "3"
 services:
    db:
-      image: mysql
+      build: ./db
       ports:
          - '3306:3306'
       environment:
@@ -9,7 +9,6 @@ services:
          - MYSQL_DATABASE=${MYSQL_DATABASE}
       volumes:
          - wca_db:/var/lib/mysql
-         - ./db/init:/docker-entrypoint-initdb.d/:ro
       expose:
          - "3306"
    python:
