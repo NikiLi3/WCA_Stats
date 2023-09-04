@@ -2,9 +2,7 @@
 
 ## Start docker container and init db:
 
-Move the newly downloaded WCA_export file into db/init directory (name does not matter, just needs to be a .sql file; the setup.sql file is no longer required)
-
-To create the image and start the container open a terminal and move into the directory where compose.yml is and execute:
+To create the image and start the container open a terminal and move to the project root where compose.yml is and execute:
 
 ```
 docker-compose up --build
