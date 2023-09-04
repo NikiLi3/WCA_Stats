@@ -18,6 +18,9 @@ services:
          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
          - MYSQL_DATABASE=${MYSQL_DATABASE}
       restart: on-failure
+      volumes:
+         - wca_db:/var/lib/mysql
+         - ./cache:/tmp/cache
       links:
          - db
    db_gui:
