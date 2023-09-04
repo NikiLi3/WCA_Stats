@@ -1,0 +1,33 @@
+version: "3"
+services:
+   db:
+      image: mysql
+      ports:
+         - '3306:3306'
+      environment:
+         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+         - MYSQL_DATABASE=${MYSQL_DATABASE}
+      volumes:
+         - wca_db:/var/lib/mysql
+         - ./db/init:/docker-entrypoint-initdb.d/:ro
+      expose:
+         - "3306"
+   python:
+      container_name: python_container
+      build: ./python
+      environment:
+         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+         - MYSQL_DATABASE=${MYSQL_DATABASE}
+      restart: on-failure
+      links:
+         - db
+   db_gui:
+      image: phpmyadmin
+      environment:
+         - PMA_HOST=db
+         - PMA_USER=root
+         - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      ports:
+         - 6080:80
+volumes:
+   wca_db:

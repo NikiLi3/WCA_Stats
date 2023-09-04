@@ -1,3 +1,4 @@
 README_old.md
 .idea
 /db/init/*
+.env

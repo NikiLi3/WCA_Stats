@@ -7,13 +7,13 @@ Move the newly downloaded WCA_export file into db/init directory (name does not 
 To create the image and start the container open a terminal and move into the directory where compose.yml is and execute:
 
 ```
-docker-compose up
+docker-compose up --build
 ```
 
 Maybe shut down first:
 
 ```
-docker-compose down && docker-compose up
+docker-compose down && docker-compose up --build
 ```
 
 Note: init script will not run if db volume already existed -> Remove old volume:
