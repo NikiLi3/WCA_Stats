@@ -24,11 +24,11 @@ services:
             condition: service_healthy
       volumes:
          - wca_db:/var/lib/mysql
-         - ./cache:/tmp/cache
+         - ./docs/assets:/tmp/cache
    upload:
       build: ./upload
       volumes:
-         - ./images:/tmp/cache
+         - ./docs/assets:/tmp/cache
       environment:
          - GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN}
       depends_on:
