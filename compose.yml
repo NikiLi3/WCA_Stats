@@ -15,7 +15,6 @@ services:
          timeout: 3s
          retries: 35
    python:
-      container_name: python_container
       build: ./python
       environment:
          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -26,8 +25,15 @@ services:
       volumes:
          - wca_db:/var/lib/mysql
          - ./cache:/tmp/cache
-      links:
-         - db
+   upload:
+      build: ./upload
+      volumes:
+         - ./cache:/tmp/cache
+      environment:
+         - GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN}
+      depends_on:
+         python:
+            condition: service_completed_successfully
    db_gui:
       image: phpmyadmin
       environment:
