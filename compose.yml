@@ -13,9 +13,9 @@ services:
          test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
          interval: 3s
          timeout: 3s
-         retries: 35
-   python:
-      build: ./python
+         retries: 100
+   image-creator:
+      build: ./image-creator
       environment:
          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
          - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -28,11 +28,11 @@ services:
    upload:
       build: ./upload
       volumes:
-         - ./cache:/tmp/cache
+         - ./images:/tmp/cache
       environment:
          - GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN}
       depends_on:
-         python:
+         image-creator:
             condition: service_completed_successfully
    db_gui:
       image: phpmyadmin
@@ -45,5 +45,7 @@ services:
       depends_on:
          db:
             condition: service_healthy
+      profiles:
+         - debug
 volumes:
    wca_db:

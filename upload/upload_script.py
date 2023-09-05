@@ -4,11 +4,11 @@ from github import Github
 os.chdir('tmp/cache')
 
 g = Github(os.environ["GITHUB_ACCESS_TOKEN"])
-repo = g.get_repo('NikiLi3/NikiLi3.github.io')
+repo = g.get_repo('NikiLi3/WCA_Stats')
 
 # TODO: create new directory depending on databased dump date
 
-folder = 'cache'
+folder = 'images'
 
 for file_name in os.listdir():
     with open(file_name, 'rb') as image:
