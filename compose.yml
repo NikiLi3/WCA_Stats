@@ -9,15 +9,20 @@ services:
          - MYSQL_DATABASE=${MYSQL_DATABASE}
       volumes:
          - wca_db:/var/lib/mysql
-      expose:
-         - "3306"
+      healthcheck:
+         test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+         interval: 3s
+         timeout: 3s
+         retries: 35
    python:
       container_name: python_container
       build: ./python
       environment:
          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
          - MYSQL_DATABASE=${MYSQL_DATABASE}
-      restart: on-failure
+      depends_on:
+         db:
+            condition: service_healthy
       volumes:
          - wca_db:/var/lib/mysql
          - ./cache:/tmp/cache
@@ -30,6 +35,9 @@ services:
          - PMA_USER=root
          - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD}
       ports:
-         - 6080:80
+         - '6080:80'
+      depends_on:
+         db:
+            condition: service_healthy
 volumes:
    wca_db:
