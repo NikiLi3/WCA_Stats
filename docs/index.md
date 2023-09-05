@@ -14,4 +14,6 @@
 
 ![](assets/image4.png)
 
+# Test
+
 [Other page](./another-page.md).
