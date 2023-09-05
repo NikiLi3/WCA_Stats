@@ -4,6 +4,6 @@ COPY requirements.txt ./
 
 RUN pip install -r requirements.txt
 
-COPY test.py ./
+COPY create_images.py ./
 
-CMD python /test.py
+CMD python /create_images.py
