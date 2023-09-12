@@ -1,7 +1,12 @@
 version: "3"
 services:
+   downloader:
+      build: ./downloader
+      volumes:
+         - wca_db:/database
+         - wca_db_export:/downloads
    db:
-      build: ./db
+      image: mysql
       ports:
          - '3306:3306'
       environment:
@@ -9,6 +14,10 @@ services:
          - MYSQL_DATABASE=${MYSQL_DATABASE}
       volumes:
          - wca_db:/var/lib/mysql
+         - wca_db_export:/docker-entrypoint-initdb.d
+      depends_on:
+         downloader:
+            condition: service_completed_successfully
       healthcheck:
          test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
          interval: 3s
@@ -34,6 +43,8 @@ services:
       depends_on:
          image-creator:
             condition: service_completed_successfully
+      profiles:
+         - upload
    db_gui:
       image: phpmyadmin
       environment:
@@ -48,4 +59,5 @@ services:
       profiles:
          - debug
 volumes:
+   wca_db_export:
    wca_db:
