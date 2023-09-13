@@ -5,6 +5,7 @@ services:
       volumes:
          - wca_db:/database
          - wca_db_export:/downloads
+         - wca_images:/images
    db:
       image: mysql
       ports:
@@ -33,11 +34,12 @@ services:
             condition: service_healthy
       volumes:
          - wca_db:/var/lib/mysql
-         - ./docs/assets:/tmp/cache
+         - wca_images:/images
+         #- ./docs/assets:/tmp/cache
    upload:
       build: ./upload
       volumes:
-         - ./docs/assets:/tmp/cache
+         - wca_images:/images
       environment:
          - GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN}
       depends_on:
@@ -61,3 +63,4 @@ services:
 volumes:
    wca_db_export:
    wca_db:
+   wca_images:
