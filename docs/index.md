@@ -2,7 +2,7 @@
 
 ![](assets/image1.png)
 
-## Most common nationalities
+## ost common nationalities
 
 ![](assets/image2.png)
 
@@ -14,6 +14,3 @@
 
 ![](assets/image4.png)
 
-# Test
-
-[Other page](./another-page.md).
